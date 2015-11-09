@@ -21,7 +21,7 @@ for line in lines:
     users.append(line_list)
 myfile.close()
 
-newfile = open('../tmp/avazu_sample_user2', 'w+')
+newfile = open('../tmp/avazu_sample_user_quantify', 'w+')
 for line in users:
     newfile.write(','.join(line) + '\n')
 newfile.close()

@@ -15,7 +15,7 @@ def read_file():
         line_list = line.strip("\n").split("@")
         ad_list.append(line_list)
     
-    user_file = open("../tmp/avazu_sample_user2")
+    user_file = open("../tmp/avazu_sample_user_quantify")
     user_ad_list = [[]]
     download_list = [[]]
     count_user = 0; count_download = 0
@@ -88,11 +88,14 @@ def fix_default_list(default_download_value, default_ad_value):
     fixed_list = list()
     size = len(user_ad_list[0])
     for line in user_ad_list:
+        
         for i in range(1,5):
             if line[0] == '1' and line[size-i] == '-1':
                 line[size-i] = default_download_value[4-i]
             elif line[0] == '0' and line[size-i] == '-1':
                 line[size-i] = default_ad_value[4-i]
+        if line[0] == '0':
+            line[0] = '-1'
         fixed_list.append(line)
     return fixed_list
 
@@ -118,7 +121,7 @@ def normalizaling_feature():
 def write_file(normalization_list):
     myfile = open("../tmp/aua_feature", "w+")
     for line in normalization_list:
-        myfile.write(','.join(line) + '\n')
+        myfile.write(' '.join(line) + '\n')
     myfile.close()
 
         
