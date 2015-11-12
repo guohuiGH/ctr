@@ -38,6 +38,7 @@ def read_file():
     user_file.close()
     len_d = len(download_list)
     len_u = len(user_ad_list)
+
     return ad_list,download_list[:len_d-1], user_ad_list[:len_u-1]
 
 def find_default_value(input_list):
