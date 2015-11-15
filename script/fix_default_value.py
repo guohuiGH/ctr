@@ -8,6 +8,7 @@
 #coding=utf-8
 
 import math
+import sys
 def read_file():
     ad_file = open("../tmp/avazu_ad_quantify")
     ad_list = list()
@@ -15,7 +16,8 @@ def read_file():
         line_list = line.strip("\n").split("@")
         ad_list.append(line_list)
     
-    user_file = open("../tmp/avazu_sample_user_quantify")
+    #user_file = open("../tmp/avazu_sample_user_quantify")
+    user_file = open(sys.argv[1])
     user_ad_list = [[]]
     download_list = [[]]
     count_user = 0; count_download = 0
@@ -110,6 +112,13 @@ def normalizaling_feature():
         installs = ''.join(line[size-4].split(',')).split(' - ')
         line[size-4] = str(round(math.log((int(installs[0]) + int(installs[1]) /2)) / math.log(10)))
         line[size-2] = str(round(math.log(int(line[size-2]))/ math.log(10)))
+        star = float(line[size-3])
+        if star >= 4:
+            star = star*10-40
+        else:
+            star = 0
+        line[size-3] = str(star)
+        #line[size-3] = str(float(line[size-3])*10)
         s = float(line[size-1])
         if (s > 100):
             s = 100
@@ -120,7 +129,8 @@ def normalizaling_feature():
     return normalization_list
 
 def write_file(normalization_list):
-    myfile = open("../tmp/aua_feature", "w+")
+    #myfile = open("../tmp/aua_feature", "w+")
+    myfile = open(sys.argv[2], 'w+')
     for line in normalization_list:
         myfile.write(' '.join(line) + '\n')
     myfile.close()
@@ -131,7 +141,7 @@ def write_file(normalization_list):
 if __name__ == "__main__":
     (ad_list, download_list, user_ad_list) = read_file()
     default_download_value = find_default_value(download_list)
-    default_ad_value = find_default_value(user_ad_list);
+    default_ad_value = find_default_value(user_ad_list)
     fixed_list = fix_default_list(default_download_value, default_ad_value)
     normalization_list = normalizaling_feature()
     write_file(normalization_list)
