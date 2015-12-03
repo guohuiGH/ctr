@@ -47,6 +47,7 @@ if __name__ == "__main__":
             fptr.write("%s\n" %line)
         else:
             if sum_none > 0:
+                print "comein"
                 fptr.write("%s\n" %line)
                 sum_none -= 1
 

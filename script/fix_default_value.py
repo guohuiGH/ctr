@@ -117,8 +117,8 @@ def normalizaling_feature():
             star = star*10-40
         else:
             star = 0
-        line[size-3] = str(star)
-        #line[size-3] = str(float(line[size-3])*10)
+        #line[size-3] = str(star)
+        line[size-3] = str(float(line[size-3])*10)
         s = float(line[size-1])
         if (s > 100):
             s = 100

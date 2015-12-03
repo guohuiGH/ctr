@@ -6,6 +6,8 @@
 # ************************************************************************/
 #coding=utf-8
 
+import sys
+
 def read_ad_file():
     map_ad_file = open('../tmp/avazu_map_ad')
     line = map_ad_file.readline()
@@ -29,7 +31,7 @@ def read_user_file():
         line = map_user_file.readline()
     map_user_file.close()
 
-    sample_user_file = open('../tmp/avazu_sample_user')
+    sample_user_file = open('../tmp/avazu_sample_user_after_delete')
     sample_user_list = [line.strip().split(',')[1] for line in sample_user_file.readlines()]
     sample_user_file.close()
 
@@ -40,7 +42,7 @@ def read_user_file():
     return sample_user
 
 def read_test_user(map_ad, map_sample_user):
-    test_user_file = open('../tmp/test_avazu_user_info')
+    test_user_file = open('../data/user/avazu_user_info_' + argv[1])
     test_user_quantify_file = open('../tmp/avazu_user_test_quantify', 'w+')
     user_key = map_sample_user.keys()
     ad_key = map_ad.keys()

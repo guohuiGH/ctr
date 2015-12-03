@@ -1,4 +1,4 @@
-
+# Author: guohui
 ad_dic = dict()
 user_dic = dict()
 NONE_VALUE = "-1"
@@ -47,14 +47,17 @@ def parse_size(ss):
 		size = float(ss[0:l-1])*1000
         else:
                 size = float(ss)
-        return float(size)
+	return float(size)
 
 
-def quantifyAdInfo(file_name, file_name_2):
+def quantifyAdInfo(file_name, file_name_2, file_name_3):
 	global NONE_VALUE
 	temp_file = open(file_name, "r")
-	ad_file = open(file_name_2, "w+")
-	line = temp_file.readline()
+        #temp_file2 = open(file_name_2, "r")
+	ad_file = open(file_name_3, "w+")
+	lines = temp_file.readlines()
+        #temp_lines = temp_file2.readlines()
+        #lines.extend(temp_lines)
 
 	country_dic = dict()
 	title_dic = dict()
@@ -65,7 +68,7 @@ def quantifyAdInfo(file_name, file_name_2):
 	count_title = 0
 	count_category = 0
 
-	while line:
+	for line in lines:
 		line_list = line.strip().split("@@")
 
 		temp_line = ""
@@ -147,10 +150,11 @@ def quantifyAdInfo(file_name, file_name_2):
 		temp_line += "\n"
 
 		ad_file.write(temp_line)
-		line = temp_file.readline()
+		#line = temp_file.readline()
 		pass
 
 	temp_file.close()
+        #temp_file2.close()
 	ad_file.close()
 	pass
 
@@ -169,11 +173,13 @@ def quantifyUserInfo(file_name, file_name_2):
 
 		line_list = line.strip().split("@@")
 
+		count +=1
 		ad_id = line_list[0]
 		if ad_id not in ad_dic:
-			count +=1
+
 			line = temp_file.readline()
 			continue
+		
 		temp_line = ""
 		temp_line += str(ad_dic[ad_id]) + ","
 
@@ -185,9 +191,12 @@ def quantifyUserInfo(file_name, file_name_2):
 		if user_id not in user_dic:
 			user_dic[user_id] = count_user;
 			count_user += 1
-		temp_line += (str(count_user) + ",")
-		
-		click_value = line_list[2]
+		temp_line += (str(user_dic[user_id]) + ",")
+		try:
+			click_value = line_list[2]
+		except:
+			click_value = '2105'
+			print line
 		if click_value < '2104':
 			#count_click += 1
 			temp_line += "1"
@@ -221,7 +230,8 @@ if __name__ == '__main__':
 	
 	avazu_ad_file_name = "../tmp/avazu_ad_info"
 	avazu_ad_quantify_file_name = "../tmp/avazu_ad_quantify"
-	quantifyAdInfo(avazu_ad_file_name, avazu_ad_quantify_file_name)
+        avazu_test_ad = "../tmp/test_avazu_ad_info"
+	quantifyAdInfo(avazu_ad_file_name, avazu_test_ad, avazu_ad_quantify_file_name)
 	avazu_user_file_name = "../tmp/avazu_user_info"
 	avazu_user_quantify_file_name = "../tmp/avazu_user_quantify"
 	quantifyUserInfo(avazu_user_file_name, avazu_user_quantify_file_name)

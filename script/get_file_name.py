@@ -1,7 +1,7 @@
 #!/usr/bin/python  
 # -*- coding:utf8 -*- 
 import os
-
+import sys
 def getFileName(path):
 	dir_list = list()
 	file_list = list()
@@ -14,7 +14,8 @@ def getFileName(path):
 		new_path = path+ "/" + f2
 		new_files = os.listdir(new_path)
 		for f in new_files:
-			file_name.write(new_path + "/" + f + "\n")
+			if f2 >= sys.argv[1] and f2 <= sys.argv[2]:
+				file_name.write(new_path + "/" + f + "\n")
 			#print f
 
 if __name__ == '__main__':

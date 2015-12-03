@@ -18,9 +18,9 @@ for line in lines:
     line_list = line.strip().split(' ')
     new_line = list()
     new_line.append(line_list[0])
-    new_line.extend(line_list[3:])
+    new_line.extend(line_list[1:])
     l = ' '.join(new_line) + '\n'
-    if count % 5 == 0:
+    if count  % 7 == 0:
         test_file.write(l)
     else:
         train_file.write(l)

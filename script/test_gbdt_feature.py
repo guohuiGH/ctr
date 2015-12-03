@@ -7,7 +7,7 @@
 #!/bin/bash
 #coding=utf-8
 
-is_user_ad = 3
+is_user_ad = 1
 
 def write_file(file_name1, file_name2):
     global is_user_ad

@@ -54,5 +54,5 @@ def readfile(test_file_name, predict_file_name):
 
 if __name__=='__main__':
     (pred, act) = readfile(sys.argv[1], sys.argv[2])
-    print llfun(pred, act)
+    print "log loss:" + str(llfun(pred, act))
 

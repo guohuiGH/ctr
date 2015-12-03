@@ -23,7 +23,7 @@ def read_file(file_name1, file_name2):
 def maxlen(features):
     column = len(features[0])
     ma = list()
-    for col in range(0,column):
+    for col in range(1,column):
         maxValue = max([int(float(fe[col])) for fe in features])
         ma.append(maxValue)
     return ma
@@ -36,12 +36,13 @@ def append_data(file_name, max_len, origin_feature, gbdt_feature):
         origin_list = origin_feature[i]
         size = len(origin_list)
         for j in range (1,size):
-            origin_list[j] = str(max_len[j] + int(float(origin_list[j])) + 1) + ":1"
+            origin_list[j] = str(max_len[j-1] + int(float(origin_list[j])) + 1) + ":1"
 
         gbdt_list = gbdt_feature[i]
+
         s = len(gbdt_list)
         for j in range(1, s):
-            gbdt_list[j] = str(max_len[j+size-1] + int(float(gbdt_list[j])) + 1) + ":1"
+            gbdt_list[j] = str(max_len[j+size-2] + int(float(gbdt_list[j])) + 1) + ":1"
         temp_list = list()
         temp_list.extend(origin_list)
         temp_list.extend(gbdt_list[1:])
@@ -52,11 +53,11 @@ def append_data(file_name, max_len, origin_feature, gbdt_feature):
 def write_file():
     (train_origin_feature, train_gbdt_feature) = read_file('../tmp/aua_train', '../tmp/train_gbdt_out')
     train_len = maxlen(train_origin_feature)
-    train_len.extend(maxlen(train_gbdt_feature)[1:])
+    train_len.extend(maxlen(train_gbdt_feature))
 
     (test_origin_feature, test_gbdt_feature) = read_file('../tmp/aua_test', '../tmp/test_gbdt_out')
     test_len = maxlen(test_origin_feature)
-    test_len.extend(maxlen(test_gbdt_feature)[1:])
+    test_len.extend(maxlen(test_gbdt_feature))
 
     temp_len = max(train_len, test_len)
     sum_len = 0
@@ -64,7 +65,8 @@ def write_file():
     for i in range(0, len(temp_len)):
         max_len.append(sum_len)
         sum_len += (temp_len[i] + 1)
-
+    max_len.append(sum_len)
+    
     print max_len
     append_data('../tmp/train_dense', max_len, train_origin_feature, train_gbdt_feature)
     append_data('../tmp/test_dense', max_len, test_origin_feature, test_gbdt_feature)
