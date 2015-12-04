@@ -1,4 +1,5 @@
 # Author: guohui
+import sys
 ad_dic = dict()
 user_dic = dict()
 NONE_VALUE = "-1"
@@ -50,7 +51,7 @@ def parse_size(ss):
 	return float(size)
 
 
-def quantifyAdInfo(file_name, file_name_2, file_name_3):
+def quantifyAdInfo(file_name,  file_name_3):
 	global NONE_VALUE
 	temp_file = open(file_name, "r")
         #temp_file2 = open(file_name_2, "r")
@@ -228,14 +229,32 @@ def mapUserAd(file_name, file_name_2):
 
 if __name__ == '__main__':
 	
-	avazu_ad_file_name = "../tmp/avazu_ad_info"
-	avazu_ad_quantify_file_name = "../tmp/avazu_ad_quantify"
-        avazu_test_ad = "../tmp/test_avazu_ad_info"
-	quantifyAdInfo(avazu_ad_file_name, avazu_test_ad, avazu_ad_quantify_file_name)
-	avazu_user_file_name = "../tmp/avazu_user_info"
-	avazu_user_quantify_file_name = "../tmp/avazu_user_quantify"
+	#avazu_ad_file_name = "../tmp/avazu_ad_info"
+
+
+        if sys.argv[3] == '0':
+	    avazu_ad_file_name = '../data/train/avazu_ad_info_'+ sys.argv[2]    
+	    avazu_user_file_name = '../data/train/user_info_' + sys.argv[1] + '_' + sys.argv[2]
+            avazu_ad_quantify_file_name = "../data/train/avazu_ad_quantify"
+            avazu_user_quantify_file_name = "../data/train/avazu_user_quantify"
+
+	    avazu_map_user_file_name = "../data/train/avazu_map_user"
+	    avazu_map_ad_file_name = "../data/train/avazu_map_ad"
+        elif sys.argv[3] == '1':
+
+	    avazu_ad_file_name = '../data/test/avazu_ad_info_'+ sys.argv[2]    
+	    avazu_user_file_name = '../data/test/user_info_' + sys.argv[1] + '_' + sys.argv[2]
+
+            avazu_ad_quantify_file_name = "../data/test/avazu_ad_quantify"
+            avazu_user_quantify_file_name = "../data/test/avazu_user_quantify"    
+	    avazu_map_user_file_name = "../data/test/avazu_map_user"
+	    avazu_map_ad_file_name = "../data/test/avazu_map_ad"
+
+        quantifyAdInfo(avazu_ad_file_name, avazu_ad_quantify_file_name)
+	#avazu_user_file_name = "../tmp/avazu_user_info"
+
+
 	quantifyUserInfo(avazu_user_file_name, avazu_user_quantify_file_name)
-	avazu_map_user_file_name = "../tmp/avazu_map_user"
-	avazu_map_ad_file_name = "../tmp/avazu_map_ad"
+
 	mapUserAd(avazu_map_user_file_name, avazu_map_ad_file_name)
 

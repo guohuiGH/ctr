@@ -8,18 +8,12 @@
 
 
 
-
-
-# for test_data
-#python read_event_info.py 0
-
-# for train data
-cd /home/ec2-user/fmg-sysu/ctr/script/
-python quantify_info.py
-cd /home/ec2-user/fmg-sysu/ctr/script/
-python sample_avazu_user.py
-
-python delete_repeat.py
+st=20151117
+en=20151117
+flag=1
+python connect_info.py $st $en $flag
+python quantify_info.py $st $en $flag
+python sample_avazu_user.py $flag
+python delete_repeat.py $flag
 #for test_data
-cd /home/ec2-user/fmg-sysu/ctr/script/
-#python quantify_test_user.py 20151116
+

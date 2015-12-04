@@ -1,8 +1,16 @@
 #Author: zhangyan
+#change by guohui 20151204. change the file name
 import os
+import sys
 
 if __name__ == "__main__":
-    lines = open("../tmp/avazu_user_quantify",'r').readlines()
+    if sys.argv[1]=='1':
+        input_name = '../data/test/avazu_user_quantify'
+        write_name = '../data/test/avazu_sample_user'
+    elif sys.argv[1] == '0':
+        input_name = '../data/train/avazu_user_quantify'
+        write_name = '../data/train/avazu_sample_user'
+    lines = open(input_name,'r').readlines()
     dic = {}
     count = 0
     sub = 0
@@ -23,7 +31,7 @@ if __name__ == "__main__":
                 dic[usr][1] += 1
             else:
                 dic[usr][0] += 1
-    fptr = open("../tmp/avazu_sample_user",'w+')
+    fptr = open(write_name,'w+')
     sum_one = 0
     sum_zero = 0
     active = 0
